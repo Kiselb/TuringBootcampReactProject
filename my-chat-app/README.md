@@ -45,6 +45,8 @@ You can learn more in the [Create React App documentation](https://facebook.gith
 
 To learn React, check out the [React documentation](https://reactjs.org/).
 
+How to deploy React Application on Firebase, read [GeeksforGeeks](https://www.geeksforgeeks.org/how-to-deploy-react-project-on-firebase/).
+
 ### Code Splitting
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
