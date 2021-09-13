@@ -8,7 +8,7 @@ import styles from './SignIn.module.css'
 const SignIn = () => {
     const [showLoginError, setShowLoginError] = useState(false)
     const dispatch = useDispatch()
-    const isSignedIn = useSelector(state => state.user.signedIn)
+    const signedIn = useSelector(state => state.user.signedIn)
     const onChangeFormik = (formik) => {
         return (
             (event) => {
@@ -33,9 +33,9 @@ const SignIn = () => {
                 return errors
             }}
             onSubmit={(values, { setSubmitting }) => {
-                dispatch(signinRequest({ ...values }))
-                setSubmitting(false)
                 setShowLoginError(true)
+                dispatch(signinRequest({ ...values }))
+                setSubmitting(true)
             }}
         >
             {formik => (
@@ -56,7 +56,7 @@ const SignIn = () => {
                             <ErrorMessage name="password" />
                         </div>
                         <div>
-                            {(isSignedIn) ? null : ((showLoginError) ? ("Invalid e-mail or password") : null)}
+                            {(signedIn) ? null : ((showLoginError) ? ("Invalid e-mail or password") : null)}
                         </div>
                     </div>
                 </div>

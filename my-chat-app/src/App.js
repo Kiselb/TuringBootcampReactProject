@@ -6,11 +6,11 @@ import SignIn from './components/SignIn/SignIn'
 
 function App() {
 
-  const isSignedIn = useSelector(state => state.user.signedIn)
+  const signedIn = useSelector(state => state.user.signedIn)
 
   return (
     <div className="container">
-      { (!isSignedIn)? <SignIn />: <Main />}
+      { (!signedIn)? <SignIn />: <Main />}
     </div>
   )
 }
