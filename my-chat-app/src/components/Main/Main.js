@@ -1,8 +1,16 @@
 import React from 'react'
 
+import styles from './Main.module.css'
+
 const Main = () => {
     return (
-        <h2>Main</h2>
+        <div className={styles.main}>
+            <div className={styles.panelcenter}></div>
+            <div className={styles.paneltop}></div>
+            <div className={styles.panelright}></div>
+            <div className={styles.panelbottom}></div>
+            <div className={styles.panelleft}></div>
+        </div>
     )
 }
 

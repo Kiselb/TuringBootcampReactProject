@@ -34,8 +34,8 @@ const SignIn = () => {
             }}
             onSubmit={(values, { setSubmitting }) => {
                 dispatch(signinRequest({ ...values }))
-                setShowLoginError(true)
                 setSubmitting(false)
+                setShowLoginError(true)
             }}
         >
             {formik => (
