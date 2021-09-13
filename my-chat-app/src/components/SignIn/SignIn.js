@@ -1,13 +1,22 @@
-import React from 'react'
-import { useDispatch } from 'react-redux'
+import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Formik, Field, Form, ErrorMessage } from 'formik'
 
 import { signinRequest } from '../../store/actions'
 import styles from './SignIn.module.css'
 
 const SignIn = () => {
+    const [showLoginError, setShowLoginError] = useState(false)
     const dispatch = useDispatch()
-
+    const isSignedIn = useSelector(state => state.user.signedIn)
+    const onChangeFormik = (formik) => {
+        return (
+            (event) => {
+                formik.handleChange(event)
+                setShowLoginError(false)
+            }
+        )
+    }
     return (
         <Formik
             initialValues={{ email: '', password: '' }}
@@ -24,8 +33,8 @@ const SignIn = () => {
                 return errors
             }}
             onSubmit={(values, { setSubmitting }) => {
-                alert(JSON.stringify(values, null, 2))
                 dispatch(signinRequest({ ...values }))
+                setShowLoginError(true)
                 setSubmitting(false)
             }}
         >
@@ -33,8 +42,8 @@ const SignIn = () => {
                 <div className={styles.signin}>
                     <div className={styles.signinplate}>
                         <Form>
-                            <Field name="email" type="email" placeholder="Enter e-mail here"/>
-                            <Field name="password" type="password" placeholder="Enter password here"/>
+                            <Field name="email" type="email" placeholder="Enter e-mail here" onChange={onChangeFormik(formik)} />
+                            <Field name="password" type="password" placeholder="Enter password here" onChange={onChangeFormik(formik)} />
                             <button type="submit">Sign In</button>
                         </Form>
                         <a href="/restorepassword">Forgot password?</a>
@@ -45,6 +54,9 @@ const SignIn = () => {
                         </div>
                         <div>
                             <ErrorMessage name="password" />
+                        </div>
+                        <div>
+                            {(isSignedIn) ? null : ((showLoginError) ? ("Invalid e-mail or password") : null)}
                         </div>
                     </div>
                 </div>
