@@ -9,9 +9,9 @@ const signinRequest = ({ email, password}) => ({
         password
     }
 })
-const signinSuccess = () => ({
+const signinSuccess = (user) => ({
     type: USER_FETCH_MESSAGES_SUCCESS,
-    payload: {}
+    payload: { ...user }
 })
 const signinFailure = () => ({
     type: USER_FETCH_MESSAGES_FAILURE,

@@ -5,10 +5,9 @@ import { USER_FETCH_MESSAGES_REQUEST, signinSuccess, signinFailure } from '../st
 
 function* loginUser(action) {
     try {
-        console.log(action.payload)
         const user = yield getUser(action.payload.email, action.payload.password).then(user => user)
         if (!!user) {
-            yield put(signinSuccess(user.NickName, user.EMail))
+            yield put(signinSuccess(user))
         } else {
             yield put(signinFailure())
         }

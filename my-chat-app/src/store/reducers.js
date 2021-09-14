@@ -4,23 +4,20 @@ const initialState = {
     user: {
         nickName: '',
         email: '',
-        signedIn: false
+        signedin: undefined,
     }
 }
 
 const reducer = (state = initialState, action) => {
     switch(action.type) {
         case USER_FETCH_MESSAGES_REQUEST: {
-            console.log('request')
-            return { ...state, user: { nickName: '', email: '', signedIn: false }}
+            return { ...state, user: { nickName: '', email: '', signedin: undefined }}
         }
         case USER_FETCH_MESSAGES_SUCCESS: {
-            console.log('success')
-            return { ...state, user: { nickName: action.payload.NickName, email: action.payload.EMail, signedIn: true }}
+            return { ...state, user: { nickName: action.payload.NickName, email: action.payload.EMail, signedin: true }}
         }
         case USER_FETCH_MESSAGES_FAILURE: {
-            console.log('failure')
-            return { ...state, user: { nickName: '', email: '', signedIn: false }}
+            return { ...state, user: { nickName: '', email: '', signedin: false }}
         }
         default:
             return state

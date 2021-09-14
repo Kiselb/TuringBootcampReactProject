@@ -1,22 +1,26 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Formik, Field, Form, ErrorMessage } from 'formik'
 
 import { signinRequest } from '../../store/actions'
 import styles from './SignIn.module.css'
 
-const SignIn = () => {
-    const [showLoginError, setShowLoginError] = useState(false)
+const SignIn = ({ cbSignedIn}) => {
+    const refLoginErrorMessage = useRef(null)
+
+    const user = useSelector(state => state.user)
     const dispatch = useDispatch()
-    const signedIn = useSelector(state => state.user.signedIn)
-    const onChangeFormik = (formik) => {
-        return (
-            (event) => {
-                formik.handleChange(event)
-                setShowLoginError(false)
-            }
-        )
+    const onChangeFormik = (formik) => (event) => {
+        formik.handleChange(event);
+        refLoginErrorMessage.current.style.display = 'none';
     }
+
+    useEffect(() => {
+        if (typeof user.signedin !== 'undefined') {
+            refLoginErrorMessage.current.style.display = (!user.signedin) ? ('block') : ('none')
+            !!user.signedin && cbSignedIn()
+        }
+    }, [user])
     return (
         <Formik
             initialValues={{ email: '', password: '' }}
@@ -32,11 +36,7 @@ const SignIn = () => {
                 }
                 return errors
             }}
-            onSubmit={(values, { setSubmitting }) => {
-                setShowLoginError(true)
-                dispatch(signinRequest({ ...values }))
-                setSubmitting(true)
-            }}
+            onSubmit={(values) => dispatch(signinRequest({ ...values }))}
         >
             {formik => (
                 <div className={styles.signin}>
@@ -55,8 +55,8 @@ const SignIn = () => {
                         <div>
                             <ErrorMessage name="password" />
                         </div>
-                        <div>
-                            {(signedIn) ? null : ((showLoginError) ? ("Invalid e-mail or password") : null)}
+                        <div ref={refLoginErrorMessage} style={{ display: 'none' }}>
+                            Invalid e-mail or password
                         </div>
                     </div>
                 </div>
