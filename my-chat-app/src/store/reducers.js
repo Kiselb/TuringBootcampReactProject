@@ -1,4 +1,4 @@
-import { USER_FETCH_MESSAGES_REQUEST, USER_FETCH_MESSAGES_SUCCESS, USER_FETCH_MESSAGES_FAILURE } from './actions'
+import { USER_FETCH_MESSAGES_REQUEST, USER_FETCH_MESSAGES_SUCCESS, USER_FETCH_MESSAGES_FAILURE } from './types'
 
 const initialState = {
     user: {
@@ -11,13 +11,22 @@ const initialState = {
 const reducer = (state = initialState, action) => {
     switch(action.type) {
         case USER_FETCH_MESSAGES_REQUEST: {
-            return { ...state, user: { nickName: '', email: '', signedin: undefined }}
+            return {
+                ...state,
+                user: { nickName: '', email: '', signedin: undefined }
+            }
         }
         case USER_FETCH_MESSAGES_SUCCESS: {
-            return { ...state, user: { nickName: action.payload.NickName, email: action.payload.EMail, signedin: true }}
+            return {
+                ...state,
+                user: { nickName: action.payload.NickName, email: action.payload.EMail, signedin: true }
+            }
         }
         case USER_FETCH_MESSAGES_FAILURE: {
-            return { ...state, user: { nickName: '', email: '', signedin: false }}
+            return {
+                ...state,
+                user: { nickName: '', email: '', signedin: false }
+            }
         }
         default:
             return state

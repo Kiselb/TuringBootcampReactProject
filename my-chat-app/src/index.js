@@ -2,13 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux'
 
-import 'normalize.css'
-import './index.css';
+import reportWebVitals from './reportWebVitals';
 
 import App from './App';
 import store from './store/index'
 
-import reportWebVitals from './reportWebVitals';
+import 'normalize.css'
+import './index.css';
 
 ReactDOM.render(
   <React.StrictMode>

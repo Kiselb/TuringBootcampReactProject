@@ -1,7 +1,8 @@
 import { put, takeLatest } from "@redux-saga/core/effects";
 
 import { getUser } from '../api/users'
-import { USER_FETCH_MESSAGES_REQUEST, signinSuccess, signinFailure } from '../store/actions'
+import { USER_FETCH_MESSAGES_REQUEST } from '../store/types'
+import { signinSuccess, signinFailure } from '../store/actions'
 
 function* loginUser(action) {
     try {

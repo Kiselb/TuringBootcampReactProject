@@ -1,21 +1,16 @@
-const USER_FETCH_MESSAGES_REQUEST = 'USER_FETCH_MESSAGES_REQUEST'
-const USER_FETCH_MESSAGES_SUCCESS = 'USER_FETCH_MESSAGES_SUCCESS'
-const USER_FETCH_MESSAGES_FAILURE = 'USER_FETCH_MESSAGES_FAILURE'
+import {USER_FETCH_MESSAGES_REQUEST, USER_FETCH_MESSAGES_SUCCESS, USER_FETCH_MESSAGES_FAILURE} from './types'
 
-const signinRequest = ({ email, password}) => ({
+const signinRequest = (payload) => ({
     type: USER_FETCH_MESSAGES_REQUEST,
-    payload: {
-        email,
-        password
-    }
+    payload: { ...payload }
 })
-const signinSuccess = (user) => ({
+const signinSuccess = (payload) => ({
     type: USER_FETCH_MESSAGES_SUCCESS,
-    payload: { ...user }
+    payload: { ...payload }
 })
 const signinFailure = () => ({
     type: USER_FETCH_MESSAGES_FAILURE,
     payload: {}
 })
 
-export { USER_FETCH_MESSAGES_REQUEST, USER_FETCH_MESSAGES_SUCCESS, USER_FETCH_MESSAGES_FAILURE, signinRequest, signinSuccess, signinFailure}
+export {signinRequest, signinSuccess, signinFailure}
