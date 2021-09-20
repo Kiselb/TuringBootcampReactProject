@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Formik, Field, Form, ErrorMessage } from 'formik'
 
@@ -6,16 +6,12 @@ import { signinRequest } from '../../store/actions'
 import styles from './SignIn.module.css'
 
 const SignIn = ({ cbSignedIn}) => {
-    const refLoginErrorMessage = useRef(null)
-    const [loginError, setLoginError] = useState(undefined)
+    const [errorHidden, setErrorHidden] = useState(false)
 
     const user = useSelector(state => state.user)
+    const auth = useSelector(state => state.auth)
+
     const dispatch = useDispatch()
-    const onChangeFormik = (formik) => (event) => {
-        formik.handleChange(event);
-        // refLoginErrorMessage.current.style.display = 'none';
-        setLoginError(false)
-    }
     const parentCallBack = useCallback(cbSignedIn)
 
     const validate = (values) => {
@@ -30,28 +26,26 @@ const SignIn = ({ cbSignedIn}) => {
         }
         return errors
     }
-    const onSubmit = (values) => dispatch(signinRequest(values))
-
+    const onChange = (formik) => (event) => {
+        formik.handleChange(event)
+        setErrorHidden(true)
+    }
+    const onSubmit = (values) => {
+        dispatch(signinRequest(values))
+        setErrorHidden(false)
+    }
     useEffect(() => {
-        // if (typeof user.signedin !== 'undefined') {
-        //     refLoginErrorMessage.current.style.display = (!user.signedin) ? ('block') : ('none')
-        //     !!user.signedin && parentCallBack()
-        // }
-
-        // Uncomment to supress login error blinking effect 
-        //if (typeof user.signedin !== 'undefined') {
-            setLoginError(!user.signedin)
-            !!user.signedin && parentCallBack()
-        //}
+        !!user && parentCallBack()
     }, [user, parentCallBack])
+
     return (
         <Formik initialValues={{ email: '', password: '' }} validate={validate} onSubmit={onSubmit}>
             {formik => (
                 <div className={styles.signin}>
                     <div className={styles.signinplate}>
                         <Form>
-                            <Field name="email" type="email" placeholder="Enter e-mail here" onChange={onChangeFormik(formik)} />
-                            <Field name="password" type="password" placeholder="Enter password here" onChange={onChangeFormik(formik)} />
+                            <Field name="email" type="email" placeholder="Enter e-mail here" onChange={onChange(formik)}/>
+                            <Field name="password" type="password" placeholder="Enter password here" onChange={onChange(formik)} />
                             <button type="submit">Sign In</button>
                         </Form>
                         <a href="/restorepassword">Forgot password?</a>
@@ -63,11 +57,8 @@ const SignIn = ({ cbSignedIn}) => {
                         <div>
                             <ErrorMessage name="password" />
                         </div>
-                        {/* <div ref={refLoginErrorMessage} style={{display: 'none'}}>
-                            Invalid e-mail or password
-                        </div> */}
                         <div>
-                            {(loginError) ? ((!formik.touched.email || !formik.touched.password) ? null :("Invalid e-mail or password")) : null}
+                            {(!user) ? ((errorHidden) ? null : auth.error) : null}
                         </div>
                     </div>
                 </div>

@@ -8,9 +8,9 @@ const signinSuccess = (payload) => ({
     type: USER_FETCH_MESSAGES_SUCCESS,
     payload: { ...payload }
 })
-const signinFailure = () => ({
+const signinFailure = (payload) => ({
     type: USER_FETCH_MESSAGES_FAILURE,
-    payload: {}
+    payload: { ...payload }
 })
 
 export {signinRequest, signinSuccess, signinFailure}

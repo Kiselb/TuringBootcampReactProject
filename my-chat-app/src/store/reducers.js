@@ -1,10 +1,9 @@
 import { USER_FETCH_MESSAGES_REQUEST, USER_FETCH_MESSAGES_SUCCESS, USER_FETCH_MESSAGES_FAILURE } from './types'
 
 const initialState = {
-    user: {
-        nickName: '',
-        email: '',
-        signedin: undefined,
+    user: null,
+    auth: {
+        error: null
     }
 }
 
@@ -13,19 +12,22 @@ const reducer = (state = initialState, action) => {
         case USER_FETCH_MESSAGES_REQUEST: {
             return {
                 ...state,
-                user: { nickName: '', email: '', signedin: undefined }
+                user: null,
+                auth: { error: null }
             }
         }
         case USER_FETCH_MESSAGES_SUCCESS: {
             return {
                 ...state,
-                user: { nickName: action.payload.NickName, email: action.payload.EMail, signedin: true }
+                user: { nickName: action.payload.NickName, email: action.payload.EMail, signedin: true },
+                auth: { error: null }
             }
         }
         case USER_FETCH_MESSAGES_FAILURE: {
             return {
                 ...state,
-                user: { nickName: '', email: '', signedin: false }
+                user: null,
+                auth: { error: action.payload.error }
             }
         }
         default:
